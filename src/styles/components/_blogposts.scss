@@ -1,0 +1,40 @@
+/* General styling */
+.blogposts__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive column layout */
+  gap: 20px; /* Space between posts */
+  padding: 20px; /* Optional padding */
+}
+
+.blogposts__post {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.blogposts__title {
+  font-size: $m-size;
+  margin-bottom: 10px;
+}
+
+.blogposts__img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Optional: Media queries for finer control */
+@media (max-width: 768px) {
+  .blogposts__title {
+    font-size: $ml-size;
+  }
+}
+
+// @media (max-width: 480px) {
+//   .blogposts__content {
+//     grid-template-columns: 1fr; /* Stack posts on very small screens */
+//   }
+// }
