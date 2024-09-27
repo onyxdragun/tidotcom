@@ -6,7 +6,7 @@
   "scripts": {
     "dev:vite": "vite",
     "dev:server": "nodemon server/server.js",
-    "build": "vite build",
+    "build": "NODE_ENV=production vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
