@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 8080;
 const staticPath = path.join(__dirname, process.env.STATIC_PATH);
 const sslOptions = {
   key: fs.readFileSync(process.env.SSL_KEY_PATH),
-  cert: fs.readFileSync(rocess.env.SSL_CERT_PATH)
+  cert: fs.readFileSync(process.env.SSL_CERT_PATH)
 };
 
 const app = express();
