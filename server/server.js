@@ -17,8 +17,8 @@ const __dirname = getDirname(import.meta.url);
 const PORT = process.env.PORT || 8080;
 const staticPath = path.join(__dirname, process.env.STATIC_PATH);
 const sslOptions = {
-  key: fs.readFileSync(path.resolve(__dirname, '../certs/localhost+1-key.pem')),
-  cert: fs.readFileSync(path.resolve(__dirname, '../certs/localhost+1.pem'))
+  key: fs.readFileSync(path.resolve(__dirname, '../', process.env.SSL_KEY_PATH)),
+  cert: fs.readFileSync(path.resolve(__dirname, '../', process.env.SSL_CERT_PATH))
 };
 
 const app = express();

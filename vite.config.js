@@ -2,12 +2,17 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 // https://vitejs.dev/config/
 
-const keyPath = path.resolve(__dirname, 'certs', 'localhost+1-key.pem');
-const certPath = path.resolve(__dirname, 'certs', 'localhost+1.pem');
+dotenv.config({
+  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
+});
+
+const keyPath = path.join(__dirname, process.env.SSL_KEY_PATH);
+const certPath = path.join(__dirname, process.env.SSL_CERT_PATH);
 
 console.log('SSL Key Path:', keyPath);
 console.log('SSL Cert Path:', certPath);
