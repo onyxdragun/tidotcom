@@ -11,20 +11,6 @@ dotenv.config({
   path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
 });
 
-// const keyPath = path.join(__dirname, process.env.SSL_KEY_PATH);
-// const certPath = path.join(__dirname, process.env.SSL_CERT_PATH);
-
-// console.log('SSL Key Path:', keyPath);
-// console.log('SSL Cert Path:', certPath);
-
-// if (!fs.existsSync(keyPath)) {
-//   console.error('SSL Key file does not exist at:', keyPath);
-// }
-
-// if (!fs.existsSync(certPath)) {
-//   console.error('SSL Cert file does not exist at:', certPath);
-// }
-
 export default defineConfig({
   plugins: [
     react(),

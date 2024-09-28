@@ -13,6 +13,8 @@ dotenv.config({
   path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
 });
 
+console.log(process.env.SSL_CERT_PATH);
+
 const __dirname = getDirname(import.meta.url);
 const PORT = process.env.PORT || 8080;
 const staticPath = path.join(__dirname, process.env.STATIC_PATH);
