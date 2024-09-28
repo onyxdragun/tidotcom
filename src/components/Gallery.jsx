@@ -4,7 +4,7 @@ import MasonryGallery from "./MasonryGallery";
 
 const Gallery = ({category:{name = '', category = ''}}) => {
   const [images, setImages] = useState([]);
-  let url = 'https://192.168.1.20:8080/images';
+  let url = `${process.env.REACT_APP_API_URL}/images`;
 
   useEffect(() => {
     const fetchImages = async () => {
