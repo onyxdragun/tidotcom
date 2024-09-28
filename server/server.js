@@ -19,8 +19,8 @@ const app = express();
 const __dirname = getDirname(import.meta.url);
 const isProduction = process.env.NODE_ENV === 'production';
 const staticPath = isProduction
-                  ? path.join(__dirname, 'dist')
-                  : path.join(__dirname, process.env.STATIC || './');
+                  ? path.join(__dirname)
+                  : path.join(__dirname, process.env.STATIC_PATH || './');
 const useSSL = process.env.USE_SSL === 'true';
 const PORT = process.env.PORT || 8080;
 

@@ -8,7 +8,8 @@
     "dev:server": "nodemon server/server.js",
     "build": "NODE_ENV=production vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "NODE_ENV=production node dist/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
