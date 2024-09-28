@@ -16,10 +16,13 @@ dotenv.config({
 let server;
 const app = express();
 
-const useSSL = process.env.USE_SSL === 'true';
 const __dirname = getDirname(import.meta.url);
+const isProduction = process.env.NODE_ENV === 'production';
+const staticPath = isProduction
+                  ? path.join(__dirname, 'dist')
+                  : path.join(__dirname, process.env.STATIC || './');
+const useSSL = process.env.USE_SSL === 'true';
 const PORT = process.env.PORT || 8080;
-const staticPath = path.join(__dirname, process.env.STATIC_PATH);
 
 if (useSSL) {
   const sslOptions = {
