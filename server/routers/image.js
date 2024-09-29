@@ -9,9 +9,15 @@ import { Image } from '../models/Image.js';
 const router = new express.Router();
 const __dirname = getDirname(import.meta.url);
 
+const uploadsDir = path.join(__dirname, '../uploads');
+
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, {recursive: true});
+}
+
 // Configure Multer
 const storage = multer.diskStorage({
-  destination: path.join(__dirname, '../uploads'),
+  destination: uploadsDir,
   filename: (req, file, cb) => {
     cb(null, `${file.originalname}`);
   }
@@ -20,7 +26,7 @@ const storage = multer.diskStorage({
 //----------- Middleware ----------------------------------------------
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 5000000 },
+  limits: { fileSize: 5000000 }, // 5MB limit
   fileFilter: (req, file, cb) => {
     const filetypes = /jpeg|jpg/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -45,7 +51,7 @@ router.post('/image', upload.single('image'), async (req, res) => {
     await image.save();
     res.status(201).send({ image });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({error: 'Error uploading the image', details: error});
   }
 });
 
