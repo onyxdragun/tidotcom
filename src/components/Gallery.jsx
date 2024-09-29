@@ -4,15 +4,17 @@ import MasonryGallery from "./MasonryGallery";
 
 const Gallery = ({category:{name = '', category = ''}}) => {
   const [images, setImages] = useState([]);
-  let url = `${process.env.REACT_APP_API_URL}/images`;
 
   useEffect(() => {
     const fetchImages = async () => {
+      let url = '/api/images';
       try {
         if (category) {
           url += `?category=${category}`; 
         }
+        console.log(url);
         const response = await fetch(url);
+        console.log(response);
         if (!response.ok) {
           throw new Error('Failed to fetch images');
         }

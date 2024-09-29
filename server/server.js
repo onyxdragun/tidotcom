@@ -24,6 +24,8 @@ const staticPath = isProduction
 const useSSL = process.env.USE_SSL === 'true';
 const PORT = process.env.PORT || 8080;
 
+console.log('UseSSL is', useSSL);
+
 if (useSSL) {
   const sslOptions = {
     key: fs.readFileSync(process.env.SSL_KEY_PATH),
@@ -47,15 +49,17 @@ app.use((req, res, next) => {
   next();
 });
 
+if (!isProduction) {
 app.use(cors({
-  origin: 'https://192.168.1.20:3000', // Vite Frontend
+  origin: `http://${process.env.SERVER_IP}:3000`, // Vite Frontend
 }));
+}
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(staticPath));
 app.use(express.json());
 
-app.use(imageRouter);
+app.use('/api', imageRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));

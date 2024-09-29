@@ -8,10 +8,49 @@ dotenv.config({
   path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
 });
 
-export default defineConfig(({mode}) => {
-  let serverOptions = {};
+const proxyOptions = (isProduction) => {
+  const baseProxy = {
+    '/uploads/': {
+      target: `http://${process.env.SERVER_IP}:8080`,
+      changeOrigin: true,
+      secure: false,
+    },
+  };
 
-  if (process.env.USE_SSL === 'true' && mode === 'development') {
+  if (!isProduction) {
+    baseProxy['/api/'] = {
+      target: `http://${process.env.SERVER_IP}:8080`,
+      changeOrigin: true,
+      // rewrite: (path) => path.replace(/^\/api/, ''),
+      secure: false,
+      configure: (proxy, _options) => {
+        proxy.on('error', (err, _req, _res) => {
+          console.log('proxy error', err);
+        });
+        proxy.on('proxyReq', (proxyReq, req, _res) => {
+          console.log('Sending Request to the Target:', req.method, req.url);
+        });
+        proxy.on('proxyRes', (proxyRes, req, _res) => {
+          console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+        });
+      },
+    };
+  }
+
+  return baseProxy;
+};
+
+export default defineConfig(({mode}) => {
+  const isProduction = mode === 'production';
+
+  const serverOptions = {
+    host: process.env.SERVER_IP,
+    port: 3000,
+    proxy: proxyOptions(isProduction),
+    historyApiFallback: true,
+  };
+
+  if (process.env.USE_SSL === 'true' && isProduction) {
     const keyPath = process.env.SSL_KEY_PATH;
     const certPath = process.env.SSL_CERT_PATH;
     if (keyPath && certPath) {
@@ -21,24 +60,6 @@ export default defineConfig(({mode}) => {
       };
     }
   }
-
-  serverOptions.proxy = {
-    '/api/': {
-      target: 'https://192.168.1.20:8080',
-      changeOrigin: true,
-      rewrite: (path) => path.replace(/^\/api/, ''),
-      secure: false,
-    },
-    '/uploads/': {
-      target: 'https://192.168.1.20:8080',
-      changeOrigin: true,
-      secure: false,
-    }
-  }
-
-  serverOptions.historyApiFallback = true;
-  serverOptions.host = '192.168.1.20';
-  serverOptions.port = 3000;
 
   return {
     plugins: [
