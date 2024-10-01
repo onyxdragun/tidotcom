@@ -8,10 +8,12 @@ dotenv.config({
   path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
 });
 
+const PORT = process.env.PORT || 8080;
+
 const proxyOptions = (isProduction) => {
   const baseProxy = {
     '/uploads/': {
-      target: `http://${process.env.SERVER_IP}:8080`,
+      target: `http://${process.env.SERVER_IP}:${PORT}`,
       changeOrigin: true,
       secure: false,
     },
@@ -19,7 +21,7 @@ const proxyOptions = (isProduction) => {
 
   if (!isProduction) {
     baseProxy['/api/'] = {
-      target: `http://${process.env.SERVER_IP}:8080`,
+      target: `http://${process.env.SERVER_IP}:${PORT}`,
       changeOrigin: true,
       // rewrite: (path) => path.replace(/^\/api/, ''),
       secure: false,
