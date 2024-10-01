@@ -42,7 +42,14 @@ if (useSSL) {
 }
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI);
+console.log(`Connecting to MongoDB: ${process.env.MONGO_URI}`);
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB connection successful");
+  })
+  .catch((error) => {
+    console.error('MongoDB connection error: ', error.message);
+  });
 
 app.use((req, res, next) => {
   console.log(`Requested URL: ${req.url}`);
