@@ -16,6 +16,8 @@ dotenv.config({
 let server;
 const app = express();
 
+mongoose.set('debug', true);
+
 const __dirname = getDirname(import.meta.url);
 const isProduction = process.env.NODE_ENV === 'production';
 const staticPath = isProduction
