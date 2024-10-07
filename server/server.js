@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import fs from 'fs';
 import https from 'https';
 import path from 'path';
@@ -15,8 +14,6 @@ dotenv.config({
 
 let server;
 const app = express();
-
-mongoose.set('debug', true);
 
 const __dirname = getDirname(import.meta.url);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -42,16 +39,6 @@ if (useSSL) {
   server = app;
   console.log('Running without SSL');
 }
-
-// Connect to MongoDB
-console.log(`Connecting to MongoDB: ${process.env.MONGO_URI}`);
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connection successful");
-  })
-  .catch((error) => {
-    console.error('MongoDB connection error: ', error.message);
-  });
 
 app.use((req, res, next) => {
   console.log(`Requested URL: ${req.url}`);

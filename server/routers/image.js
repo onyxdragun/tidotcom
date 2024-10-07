@@ -1,19 +1,35 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
-import fs from 'fs';
+import fs from 'fs/promises';
+import dotenv from 'dotenv';
 
 import { getDirname } from '../utils.js';
-import { Image } from '../models/Image.js';
+import { dbPool, debugQuery } from '../db.js';
+// import { Image } from '../models/Image.js';
+
+dotenv.config({
+  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
+});
 
 const router = new express.Router();
 const __dirname = getDirname(import.meta.url);
+const uploadsDir = process.env.UPLOADS_DIR;
 
-const uploadsDir = path.join(__dirname, '../uploads');
+console.log(uploadsDir);
 
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, {recursive: true});
+async function ensureUploadsDirection() {
+  try {
+    await fs.access(uploadsDir);
+  } catch {
+    await fs.mkdir(uploadsDir, {recursive: true});
+    console.log(`Uploads directory created at ${uploadsDir}`);
+  }
 }
+
+ensureUploadsDirection().catch(error => {
+  console.error('Error ensuring uploads directory: ', error);
+})
 
 // Configure Multer
 const storage = multer.diskStorage({
@@ -43,50 +59,84 @@ const upload = multer({
 // Create a new image
 router.post('/image', upload.single('image'), async (req, res) => {
   try {
-    const image = new Image({
-      title: req.body.title,
-      filename: `${req.file.filename}`
-    });
+    console.log(req.body);
+    const values = [
+      req.body.cat_id,
+      req.file.filename,
+      req.body.title,
+      req.body.keywords,
+      req.body.info
+    ];
+    const query = `
+      INSERT INTO photo (cat_id, filename, title, keywords, info, date_uploaded)
+      VALUES(?, ?, ?, ?, ?, NOW())
+      `;
+    console.log(debugQuery(query, values));
+    const [result] = await dbPool.query(query, values);
 
-    await image.save();
-    res.status(201).send({ image });
+    res.status(201)
+      .location(`/image/${result.insertId}`)
+      .json({
+        message: 'Photo uploaded successful!',
+        photoId: result.insertId
+      });
   } catch (error) {
-    res.status(500).send({error: 'Error uploading the image', details: error});
+    res.status(500).send({ error: 'Error uploading the image', details: error });
   }
 });
 
 router.get('/images', async (req, res) => {
-  const {category} = req.query;
+  const { category } = req.query;
   try {
-    const query = category ? {category} : {};
-    const results = await Image.find(query);
-    const images = results.sort(() => {
-      return Math.random() - 0.5;
-    });
-    res.status(200).json(images);
+    const query = `
+    SELECT 
+          p.id AS photo_id,
+          p.filename,
+          p.title,
+          p.info,
+          p.keywords,
+          p.views,
+          p.date_uploaded,
+          c.name AS category_name
+      FROM 
+          photo p
+      JOIN 
+          photo_cat c ON p.cat_id = c.id
+    `;
+    const [rows] = await dbPool.query(query);
+    res.status(200).json(rows);
   } catch (error) {
+    console.error('Error executing query: ', error.message);
     res.status(500).send(error);
   }
 });
 
 router.delete('/image/:image_id', async (req, res) => {
-  const {image_id} = req.params;
+  const imageId = req.params.image_id;
 
   try {
-    const deletedImage = await Image.findOneAndDelete({image_id});
-    if (!deletedImage) {
-      return res.status(404).json({error: 'Image not found'});
-    }
-    const imagePath = path.join(__dirname, '../uploads', deletedImage.filename);
-    fs.unlink(imagePath, (err) => {
-      if (err) {
-        console.error('Error deleting the file: ', err);
-      }
-    });
-    return res.status(200).json({message: 'Image deleted successfully'});
+    const [rows] = await dbPool.query('SELECT filename FROM photo WHERE id = ?', [imageId]);
 
-  } catch(error) {
-    return res.status(500).json({error: 'Server error', details: error.message});
+    if (rows.length === 0) {
+      return res.status(404).json({message: 'Image not found'});
+    }
+
+    const filename = rows[0].filename;
+    const query = 'DELETE FROM photo WHERE id = ?';
+    const [result] = await dbPool.query(query, [imageId]);
+  
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Image not found' });
+    }
+
+    const imagePath = path.join(uploadsDir, filename);
+    await fs.unlink(imagePath);
+
+    return res.status(200).json({ message: 'Image deleted successfully' });
+
+  } catch (error) {
+    console.error('Error processing request: ', error);
+    return res.status(500).json({ error: 'Server error', details: error.message });
   }
 });
 

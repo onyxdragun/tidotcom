@@ -17,6 +17,7 @@
     "express": "^4.21.0",
     "mongoose": "^8.7.0",
     "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.3",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
