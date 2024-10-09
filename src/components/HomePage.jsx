@@ -39,8 +39,8 @@ const HomePage = () => {
                like to discuss a potential project!
             </p>
           </div>
-          <div className="homepage__box homepage__about">
-            <img className="homepage__img" src="/images/IMG_6494.jpg" />
+          <div className="homepage__box homepage__about homepage__img">
+            
           </div>
         </div>
       </div>

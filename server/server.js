@@ -16,14 +16,16 @@ let server;
 const app = express();
 
 const __dirname = getDirname(import.meta.url);
+console.log('__dirname is: ', __dirname);
 const isProduction = process.env.NODE_ENV === 'production';
 const staticPath = isProduction
-                  ? path.join(__dirname)
-                  : path.join(__dirname, process.env.STATIC_PATH || './');
+  ? path.join(__dirname)
+  : path.join(__dirname, process.env.STATIC_PATH || './');
 const useSSL = process.env.USE_SSL === 'true';
 const PORT = process.env.PORT || 8080;
 
 console.log('UseSSL is', useSSL);
+console.log('staticPath is set to ', staticPath);
 
 if (useSSL) {
   const sslOptions = {
@@ -46,9 +48,9 @@ app.use((req, res, next) => {
 });
 
 if (!isProduction) {
-app.use(cors({
-  origin: `http://${process.env.SERVER_IP}:3000`, // Vite Frontend
-}));
+  app.use(cors({
+    origin: `http://${process.env.SERVER_IP}:3000`, // Vite Frontend
+  }));
 }
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));

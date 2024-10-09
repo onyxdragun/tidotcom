@@ -27,9 +27,9 @@ async function ensureUploadsDirection() {
   }
 }
 
-ensureUploadsDirection().catch(error => {
-  console.error('Error ensuring uploads directory: ', error);
-})
+// ensureUploadsDirection().catch(error => {
+//   console.error('Error ensuring uploads directory: ', error);
+// })
 
 // Configure Multer
 const storage = multer.diskStorage({
