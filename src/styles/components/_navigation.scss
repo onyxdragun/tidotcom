@@ -12,8 +12,8 @@
   text-decoration: none;
   margin: 0 1rem;
   padding: 1rem;
-
 }
+
 .nav__link:visited {
   color: black;
 }
@@ -59,7 +59,6 @@
     background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
     padding: 1rem 0;
-
     justify-content: center;
     align-items: center;
   }
@@ -73,6 +72,8 @@
   .nav__toggle {
     display: flex;
     align-items: center;
+    color: $green;
+    font-size: $ml-size;
   }
 
   .nav__link {

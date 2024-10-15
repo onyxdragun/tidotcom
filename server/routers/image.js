@@ -85,10 +85,13 @@ router.post('/image', upload.single('image'), async (req, res) => {
   }
 });
 
+//
+//
+//
 router.get('/images', async (req, res) => {
   const { category } = req.query;
   try {
-    const query = `
+    let query = `
     SELECT 
           p.id AS photo_id,
           p.filename,
@@ -103,7 +106,13 @@ router.get('/images', async (req, res) => {
       JOIN 
           photo_cat c ON p.cat_id = c.id
     `;
-    const [rows] = await dbPool.query(query);
+    const queryParams = [];
+
+    if (category) {
+      query += ' WHERE c.slug = ?';
+      queryParams.push(category);
+    }
+    const [rows] = await dbPool.query(query, queryParams);
     res.status(200).json(rows);
   } catch (error) {
     console.error('Error executing query: ', error.message);
@@ -111,6 +120,9 @@ router.get('/images', async (req, res) => {
   }
 });
 
+//
+//
+//
 router.delete('/image/:image_id', async (req, res) => {
   const imageId = req.params.image_id;
 

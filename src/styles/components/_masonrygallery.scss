@@ -22,11 +22,17 @@
 }
 
 .gallery__nav__button {
-  padding: 1rem 2rem;
-  color: black;
+  padding: .7rem 2rem;
+  color: white;
   border: none;
   cursor: pointer;
+  background-color: $green;
   transition: background-color 0.3s, transform 0.3s;
+  border-radius: 0.8rem;
+}
+
+.gallery__nav__button--active {
+  font-weight: bold
 }
 
 .gallery__nav__button:hover {

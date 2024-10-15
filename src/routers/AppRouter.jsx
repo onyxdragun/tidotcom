@@ -2,11 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from "../components/Header.jsx";
+import Footer from "../components/Footer.jsx";
 import HomePage from "../components/HomePage.jsx";
 import AboutPage from "../components/AboutPage.jsx";
 import GalleryPage from "../components/GalleryPage.jsx"
-import PricingPage from "../components/PricingPage.jsx";
+import ServicesPage from "../components/ServicesPage.jsx";
 import NotFoundPage from "../components/NotFoundPage.jsx";
+import ContactPage from "../components/ContactPage.jsx";
 
 const AppRouter = () => (
   <Router>
@@ -21,19 +23,23 @@ const AppRouter = () => (
         element={<GalleryPage />}
       />
       <Route
-        path="/pricing"
-        element={<PricingPage />}
+        path="/services"
+        element={<ServicesPage />}
       />
       <Route
         path="/about"
         element={<AboutPage />}
       />
-
+      <Route
+        path="/contact"
+        element={<ContactPage />}
+      />
       <Route
         path="*"
         element={<NotFoundPage />}
       />
     </Routes>
+    <Footer />
   </Router>
 );
 

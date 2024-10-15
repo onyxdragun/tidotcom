@@ -6,6 +6,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 import { getDirname } from './utils.js';
+import {router as emailRouter} from './routers/email.js';
 import { router as imageRouter } from './routers/image.js';
 
 dotenv.config({
@@ -58,6 +59,7 @@ app.use(express.static(staticPath));
 app.use(express.json());
 
 app.use('/api', imageRouter);
+app.use('/api/mail', emailRouter);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));

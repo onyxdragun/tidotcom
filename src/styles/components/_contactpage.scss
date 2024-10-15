@@ -1,0 +1,63 @@
+.contactpage__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.contactpage__form {
+  width: 100%;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 .4rem 1rem rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  margin-top: 2rem;
+}
+
+.contactpage__label {
+  display: block;
+  margin: 1rem 0.5rem;
+  font-weight: 600;
+}
+
+.contactpage__input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.contactpage__input:focus {
+  outline: none;
+  box-shadow: 0 .4rem .8rem rgba(0, 0, 0, 0.2);
+  border-color: $green;
+}
+
+.contactpage__textarea {
+  box-sizing: border-box;
+  height: 100px;
+  resize: vertical;
+}
+
+.contactpage__btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: $green;
+  color: white;
+  border: none;
+  border-radius: .5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contactpage__error {
+  color: red;
+  font-size: $s-size;
+}

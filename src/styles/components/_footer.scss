@@ -1,0 +1,20 @@
+.footer {
+  margin: 0 auto;
+  max-width: 150rem;
+  padding: 0 $s-size;
+  margin-bottom: $m-size;
+}
+
+.footer__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .footer__content {
+    flex-direction: column;
+    justify-content: center;
+  }
+}

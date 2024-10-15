@@ -1,0 +1,38 @@
+.socials {
+  display: flex;
+  align-items: center;
+}
+
+.socials__icon {
+  transition: color 0.3s ease, transform 0.3s ease;
+  color: black;
+  display: inline-block;
+  margin: 0 .5rem;
+  padding: 0 .2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fa__icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.socials__icon:hover {
+  color:rgb(52, 133, 83);
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .socials {
+    margin-top: 1rem;
+  }
+  .socials__icon {
+    margin: 0 .5rem;
+  }
+
+  .fa__icon {
+    width: 3rem;
+    height: 3rem;
+  }
+}

@@ -34,7 +34,7 @@ const GalleryPage = () => {
           <button
             key={index}
             onClick={()=> setCategory(item)}
-            className="gallery__nav__button"
+            className={`gallery__nav__button ${category.category === item.category ? 'gallery__nav__button--active' : ''}`}
           >
             {item.name}
           </button>

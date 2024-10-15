@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
+import Socials from "./Socials";
+
 const Navigation = () => {
 
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +17,7 @@ const Navigation = () => {
         className="nav__toggle"
         onClick={toggleMenu}
       >
-        {isOpen ? 'X' : '☰'} 
+        {isOpen ? 'X' : '☰'}
       </button>
       <div className={`nav__links ${isOpen ? "nav__links--open" : ""}`}>
         <NavLink
@@ -33,11 +35,11 @@ const Navigation = () => {
           Gallery
         </NavLink>
         <NavLink
-          to="/pricing"
+          to="/services"
           className={({ isActive }) => isActive ? 'nav__link nav__link--active' : 'nav__link'} end
           onClick={() => setIsOpen(false)}
         >
-          Pricing
+          Services
         </NavLink>
         <NavLink
           to="/about"
@@ -46,8 +48,16 @@ const Navigation = () => {
         >
           About
         </NavLink>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) => isActive ? 'nav__link nav__link--active' : 'nav__link'} end
+          onClick={() => setIsOpen(false)}
+        >
+          Contact
+        </NavLink>
+        <Socials />
       </div>
-    </nav>
+    </nav >
   );
 };
 
