@@ -12,9 +12,7 @@ const Gallery = ({category:{name = '', category = ''}}) => {
         if (category) {
           url += `?category=${category}`; 
         }
-        console.log(url);
         const response = await fetch(url);
-        console.log(response);
         if (!response.ok) {
           throw new Error('Failed to fetch images');
         }

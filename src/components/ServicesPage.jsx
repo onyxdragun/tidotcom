@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
 import ServiceDetails from "./ServiceDetails.jsx";
@@ -18,10 +19,15 @@ const servicesOffered = [
     duration: '1-hour',
     cost: '$200',
     deliverables: [
-      "15-20 full-resolution images digitally delivered to you15-20 full-resolution images digitally delivered to you",
+      "15-20 full-resolution images digitally delivered to you",
       "A mix of candid and lightly guided family images",
     ],
     bgimage: '/images/20231008-9789.jpg',
+    callToAction: (
+      <NavLink to="/contact">
+        <button className="servicedetails__contact-btn">Book Now!</button>
+      </NavLink>
+    )
   },
   {
     title: 'Product Photography',
@@ -34,12 +40,17 @@ const servicesOffered = [
     brand's visual presence.
     `,
     duration: 'Variable',
-    cost: 'Contact Me',
+    cost: (
+      <NavLink to="/contact">
+        <button className="servicedetails__contact-btn">Contact Me</button>
+      </NavLink>
+    ),
     deliverables: [
       "Full resolution images in both Vertical and Horizontal orientation (if applicable)",
       "Images that can be used in 9:16 ratio for mobile social media platforms (great for Reels/Stories)",
     ],
     bgimage: '/images/20240412-3190.jpg',
+    callToAction: ''
   },
 ];
 

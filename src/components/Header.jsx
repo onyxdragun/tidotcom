@@ -19,13 +19,13 @@ const Header = () => {
   
   return (
     <header className="header">
-      <div className="header__content">
+      <a className="header__content" href="/">
         <h1 className={`header__title${isScrolled ? '--small' : ''}`}>
           Tyler Ingram Photography</h1>
         <h2 className={`header__subtitle${isScrolled ? '--hidden' : ''}`}>
           Vancouver Island Photographer
         </h2>
-      </div>
+      </a>
       <Navigation />
     </header>
   );

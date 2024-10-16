@@ -59,7 +59,7 @@ const ContactPage = () => {
       ) : (
         <form onSubmit={handleSubmit} className="contactpage__form">
           <div>
-            <label className="contactpage__label" htmlFor="name">Name:</label>
+            <label className="contactpage__label" htmlFor="name">Your Name: (required)</label>
             <input
               type="text"
               id="name"
@@ -71,7 +71,7 @@ const ContactPage = () => {
             {errors.name && <p className="contactpage__error">{errors.name}</p>}
           </div>
           <div>
-            <label className="contactpage__label" htmlFor="email">Email:</label>
+            <label className="contactpage__label" htmlFor="email">Your Email: (required)</label>
             <input
               type="text"
               id="email"
@@ -83,13 +83,14 @@ const ContactPage = () => {
             {errors.email && <p className="contactpage__error">{errors.email}</p>}
           </div>
           <div>
-            <label className="contactpage__label" htmlFor="message">Message:</label>
+            <label className="contactpage__label" htmlFor="message">Your Message: (required)</label>
             <textarea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
               className="contactpage__input contactpage__textarea"
+              placeholder="Enter your message..."
             />
             {errors.message && <p className="contactpage__error">{errors.message}</p>}
           </div>

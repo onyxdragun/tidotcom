@@ -20,7 +20,6 @@ const transporter = nodemailer.createTransport(mg(auth));
 
 router.post('/send', (req, res) => {
   const { name, email, message } = req.body;
-  console.log(req.body);
 
   const mailOptions = {
     from: `${name} <${email}>`,

@@ -2,7 +2,7 @@ import React from "react";
 import { FaCanadianMapleLeaf } from "react-icons/fa6";
 
 const ServiceDetails = ({ service, index }) => {
-  const { title, description, duration, cost, deliverables, bgimage } = service;
+  const { title, description, duration, cost, deliverables, bgimage, callToAction } = service;
 
   return (
     <div
@@ -35,6 +35,11 @@ const ServiceDetails = ({ service, index }) => {
                 </li>
               ))}
             </ul>
+            {callToAction && (
+              <div className="servicedetails__calltoaction">
+                {callToAction}
+              </div>
+            )}
           </ul>
         </div>
       </div>
