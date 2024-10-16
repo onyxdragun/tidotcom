@@ -42,6 +42,13 @@ const Navigation = () => {
           Services
         </NavLink>
         <NavLink
+          to="/blog"
+          className={({ isActive }) => isActive ? 'nav__link nav__link--active' : 'nav__link'} end
+          onClick={() => setIsOpen(false)}
+        >
+          Blog
+        </NavLink>
+        <NavLink
           to="/about"
           className={({ isActive }) => isActive ? 'nav__link nav__link--active' : 'nav__link'} end
           onClick={() => setIsOpen(false)}
