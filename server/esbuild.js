@@ -11,7 +11,7 @@ esbuild.build({
   target: 'node20',
   format: 'esm',
   outfile: '../dist/server.js',
-  minify: false,
+  minify: true,
   sourcemap: true,
   packages: 'external',
 })
