@@ -45,6 +45,9 @@ if (useSSL) {
 
 app.use((req, res, next) => {
   console.log(`Requested URL: ${req.url}`);
+  if (req.path.startsWith('/blog')) {
+    return next('route');
+  }
   next();
 });
 
@@ -64,15 +67,6 @@ app.use('/api/mail', emailRouter);
 app.get('*', (req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));
 });
-
-// https.createServer(sslOptions, app).listen(PORT, process.env.SERVER_IP, () => {
-//   console.log(`Server is running at ${process.env.SERVER_IP} on port ${PORT}`);
-//   console.log(`Serving static files from ${staticPath}`);
-// });
-
-// app.listen(PORT, () => {
-//   console.log("Server is running...");
-// });
 
 server.listen(PORT, process.env.SERVER_IP, () => {
   console.log(`Server is running at ${process.env.SERVER_IP} on port ${PORT}`);
