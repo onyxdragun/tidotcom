@@ -4,10 +4,12 @@ import fs from 'fs';
 import https from 'https';
 import path from 'path';
 import dotenv from 'dotenv';
+import {createProxyMiddleware} from 'http-proxy-middleware';
 
 import { getDirname } from './utils.js';
 import {router as emailRouter} from './routers/email.js';
 import { router as imageRouter } from './routers/image.js';
+import { FaRegMap } from 'react-icons/fa6';
 
 dotenv.config({
   path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
@@ -34,7 +36,7 @@ if (useSSL) {
     cert: fs.readFileSync(process.env.SSL_CERT_PATH)
   };
 
-  // Craete HTTPS server with SSL Options
+  // Create HTTPS server with SSL Options
   server = https.createServer(sslOptions, app);
   console.log('Running with SSL');
 } else {
@@ -45,7 +47,7 @@ if (useSSL) {
 
 app.use((req, res, next) => {
   console.log(`Requested URL: ${req.url}`);
-  if (req.path.startsWith('/blog')) {
+  if (isProduction && req.path.startsWith('/blog')) {
     return next('route');
   }
   next();
@@ -55,15 +57,33 @@ if (!isProduction) {
   app.use(cors({
     origin: `http://${process.env.SERVER_IP}:3000`, // Vite Frontend
   }));
+
+  app.use('/blog', createProxyMiddleware({
+    target: 'http://localhost:8000',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/blog': '',
+    },
+  }));
+
+  app.use('/phpmyadmin', createProxyMiddleware({
+    target: 'http://phpmyadmin:80',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/phpmyadmin': '',
+    },
+  }));
 }
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(staticPath));
 app.use(express.json());
 
+// API routes
 app.use('/api', imageRouter);
 app.use('/api/mail', emailRouter);
 
+// Catch-all for front-end
 app.get('*', (req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));
 });
@@ -71,4 +91,4 @@ app.get('*', (req, res) => {
 server.listen(PORT, process.env.SERVER_IP, () => {
   console.log(`Server is running at ${process.env.SERVER_IP} on port ${PORT}`);
   console.log(`Serving static files from ${staticPath}`);
-})
+});

@@ -16,6 +16,10 @@ certs
 .env
 .env*
 
+blog
+docker-compose.yml
+Dockerfile
+
 .cpanel*
 
 # Editor directories and files

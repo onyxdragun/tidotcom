@@ -41,13 +41,14 @@ const Navigation = () => {
         >
           Services
         </NavLink>
-        <NavLink
-          to="/blog"
-          className={({ isActive }) => isActive ? 'nav__link nav__link--active' : 'nav__link'} end
+        <a href="http://localhost:8000"
+          className="nav__link"
           onClick={() => setIsOpen(false)}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Blog
-        </NavLink>
+        </a>
         <NavLink
           to="/about"
           className={({ isActive }) => isActive ? 'nav__link nav__link--active' : 'nav__link'} end

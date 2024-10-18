@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import Header from "../components/Header.jsx";
 import Footer from "../components/Footer.jsx";
@@ -33,6 +33,15 @@ const AppRouter = () => (
       <Route
         path="/contact"
         element={<ContactPage />}
+      />
+      <Route
+        path="/blog"
+        element={
+          () => {
+            window.location.href = 'http://localhost:8000';
+            return null;
+          }
+        }
       />
       <Route
         path="*"
