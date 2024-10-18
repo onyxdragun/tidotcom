@@ -11,6 +11,8 @@ const Navigation = () => {
     setIsOpen(!isOpen);
   };
 
+  console.log(import.meta.env);
+
   return (
     <nav className="nav">
       <button
@@ -41,7 +43,7 @@ const Navigation = () => {
         >
           Services
         </NavLink>
-        <a href="http://localhost:8000"
+        <a href={import.meta.env.VITE_BLOG_URL}
           className="nav__link"
           onClick={() => setIsOpen(false)}
           target="_blank"
