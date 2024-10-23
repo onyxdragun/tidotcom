@@ -18,7 +18,7 @@ const auth = {
 
 const transporter = nodemailer.createTransport(mg(auth));
 
-router.post('/send', (req, res) => {
+router.post('/send', async (req, res) => {
   const { name, email, message } = req.body;
 
   const mailOptions = {
@@ -28,14 +28,15 @@ router.post('/send', (req, res) => {
     text: message,
   };
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.error('Error sending email:', err);
-      return res.status(500).send('Email sending failed');
-    }
+  try {
+    const info = await transporter.sendMail(mailOptions);
     console.log('Email sent:', info);
-    return res.status(200).send('Email successfully sent');
-  });
+    return res.status(200).json({ message: 'Email successfully sent' });
+
+  } catch (error) {
+    console.error('Error sending email:', err);
+    return res.status(500).json({ message: `Server sending failed: ${error.message}` });
+  }
 });
 
 export { router };

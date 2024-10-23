@@ -11,8 +11,6 @@ const Navigation = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log(import.meta.env);
-
   return (
     <nav className="nav">
       <button

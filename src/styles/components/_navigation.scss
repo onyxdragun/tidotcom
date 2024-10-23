@@ -14,6 +14,10 @@
   padding: 1rem;
 }
 
+.nav__link:hover {
+  color: $green;
+}
+
 .nav__link:visited {
   color: black;
 }

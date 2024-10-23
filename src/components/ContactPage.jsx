@@ -45,7 +45,24 @@ const ContactPage = () => {
           });
         }
       } catch (error) {
-        console.error('Error sending email:', error);
+        console.log(error.response);
+        setSubmitted(false);
+        if (error.response) {
+          switch (error.response.status) {
+            case 503:
+              console.error('Mailgun Server is busy: ', error.response.data.messsage);
+              break;
+            case 500:
+              console.error('Express server error: ', error.response.data.message);
+              break;
+            default:
+              console.error('Unknown error: ', error.response.data.message);
+          }
+        } else if (error.request) {
+          console.error('Backend not reachable. Please try again later');
+        } else {
+          console.error('Error: ', error.message);
+        }
       }
     } else {
       setErrors(formErrors);
