@@ -71,5 +71,9 @@ export default defineConfig(({mode}) => {
       extensions: ['.js', '.jsx'],
     },
     server: serverOptions,
+    build: {
+      minify: false,
+      sourcemap: true,
+    }
   };
 });

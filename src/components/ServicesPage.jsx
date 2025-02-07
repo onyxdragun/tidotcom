@@ -17,7 +17,7 @@ const servicesOffered = [
     leave you with timeless images that reflect the joy of everyday life.
     `,
     duration: '1-hour',
-    cost: '$200',
+    cost: '$300',
     deliverables: [
       "15-20 full-resolution images digitally delivered to you",
       "A mix of candid and lightly guided family images",
@@ -28,6 +28,26 @@ const servicesOffered = [
         <button className="servicedetails__contact-btn">Book Now!</button>
       </NavLink>
     )
+  },
+  {
+    title: 'Pet Photography',
+    description: `
+    Every pet has a personality that deserves to be captured in a beautiful, lasting way. My pet photography service focuses on creating 
+    stunning portraits that highlight your furry friend's unique charm, from playful energy to quiet elegance. Whether it's a majestic 
+    pose, an adorable head tilt, or a candid moment of pure joy, I work with patience and care to ensure a comfortable experience for 
+    your pet. Let's create images that celebrate your pet's spirit—because they're more than just pets, they're family.
+    `,
+    duration: '1-hour',
+    cost: '$300',
+    deliverables: [
+      "Full resolution images in both Vertical and Horizontal orientation (if applicable)",
+      "Images that can be used in 9:16 ratio for mobile social media platforms (great for Reels/Stories)",
+    ],
+    bgimage: '/images/20250125-532.jpg',
+    callToAction: (
+      <NavLink to="/contact">
+        <button className="servicedetails__contact-btn">Book Now!</button>
+      </NavLink>)
   },
   {
     title: 'Product Photography',

@@ -9,6 +9,8 @@ dotenv.config({
 
 const router = express.Router();
 
+console.log(process.env.MAIL_DOMAIN);
+
 const auth = {
   auth: {
     api_key: process.env.MAIL_KEY,
